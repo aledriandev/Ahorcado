@@ -36,18 +36,24 @@ function ahorcado(){
   var palab="";
   var j = 0;
   var i = 0;
+  
   do{
-    letra = prompt("Ingrese una letra \nIntento: " +(i+1)+"/"+10 );
+    letra = window.prompt("Ingrese una letra \nIntento: " +(i+1)+"/"+10 ).toLowerCase();
     comparando=compara1(letra);
     if(comparando.indexOf(letra)==-1){
       dibujo+=(hombre[j++] +"<br>");
+    }else{
+      palab=("<br>"+comparando+"<br>");
     }
-    if(comparando.indexOf(letra)!=-1){
-      palab+=("<br>"+comparando+"<br>");
-    }
+    document.write("<br>"+"Intento "+(i+1)+"<br>"+palab+"<br>"+dibujo);
     i++;
-  }while( i<10 );
-  return (dibujo+"<br>"+palab);
+  }while( i<10 || comparando.indexOf("*")!=-1);
+  
+  if(comparando.indexOf("*")==-1){
+     alert("Ganaste....!!!!!");
+  }else{
+     alert("Perdiste...!!!! :c")
+  }
 }
 
 //array de asteriscos de acuerdo al tamaño de la palabra
