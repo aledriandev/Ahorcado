@@ -1,5 +1,5 @@
 // dibuja en el documento dibuja al hombre segun los errores y retorna tambien la palabra al final, luego de pedir los 10 intentos
-
+// todo lo hace en el prompt y en la consola.
 function obtienerPalabraSecreta() {
   var libreriaPalabras = ["m u l t i m e d i a", "i n t e r n a u t a", "s e r v i d o r", "p r o t o c o l o", "c o r t a f u e g o s",
   "n a v e g a d o r", "n o d o", "m a r c o", "p a g i n a", "t e l a r a ñ a",
@@ -13,63 +13,70 @@ function obtienerPalabraSecreta() {
   return palabra;
 }
 
-var hombre =  [        "______",    
-                       ".....|.....",   
-                       ".....|.....",
-                       ".....|.....",
-                       "..(x_x)..",
-                       "..../|\\....",
-                       "..../ \\....",
-                       "...........",
-                       "...........",
-                       "______"];
+var hombre =  [        "____Este es Pepito",    
+                       "P.....|.....",   
+                       "E.....|.....",
+                       "R.....|.....",
+                       "D...(x_x)...",
+                       "I..../|\\....",
+                       "I..../ \\....",
+                       "S....ya casi muere",
+                       "T....super casi",
+                       "E___ se murio... LO MATASTE...!!"];
 
 var palabra = obtienerPalabraSecreta ();
-console.log(palabra);
+console.log( palabra );
+var asteriscos=[];
+for(var i=0; i < palabra.length; i++){
+  asteriscos.push("*");
+}
 
-//funcion principal
+
 function ahorcado(){
-  var letra="";
-  var largo = palabra.length;
-  var comparando=[];
-  var dibujo="";
-  var palab="";
+  var letra = "";
+  var dibujo = "";
   var j = 0;
   var i = 0;
-  
-  do{
-    letra = window.prompt("Ingrese una letra \nIntento: " +(i+1)+"/"+10 ).toLowerCase();
-    comparando=compara1(letra);
-    if(comparando.indexOf(letra)==-1){
-      dibujo+=(hombre[j++] +"<br>");
-    }else{
-      palab=("<br>"+comparando+"<br>");
+  var letrasIngresadas=[];
+  var mensaje="";
+
+  while( i < 10 ){
+    
+    letra = prompt("Ingrese una letra \nIntento: " + (i+1) + "/" + 10 + " \n " + "La palabra es: " + asteriscos.join(" ") + "\n" + mensaje +"\n" + dibujo);
+    letra = letra.toLowerCase()
+    var  n = palabra.indexOf(letra);
+    var compara=[];
+    var entro = false;
+    letrasIngresadas.push(letra)
+                           
+    while( n != -1 ){
+      entro = true
+      asteriscos[n] = letra;
+      palabra[n] = "*"
+      n = palabra.indexOf(letra);
+      mensaje = ( "Acertaste una letra mas..!" + "\n" + "Ya ingresate: " + letrasIngresadas.join(" ") )
+      console.log( "Acertaste una mas... ya casi lo logras" + "\n" + asteriscos.join(" ") + "\n" + "No mates a Pepito" + dibujo )  
     }
-    document.write("<br>"+"Intento "+(i+1)+"<br>"+palab+"<br>"+dibujo);
-    i++;
-  }while( i<10 || comparando.indexOf("*")!=-1);
+    
+    if( entro == false ){
+      dibujo += (hombre[j++] + "\n");
+      mensaje = ("Oh no te equivocaste, cada vez menos oportunidades" + "\n" + "Ya ingresate: " + letrasIngresadas.join(" ") );
+      console.log( "\n" + "Intento " + (i+1) + "         " + asteriscos.join(" ") + "\n" + dibujo );
+      i++;
+    } 
+       
+    compara = asteriscos.indexOf("*");
+    if( compara == -1){
+      alert( "GANASTE...!  Salvaste a Pepito" );
+      document.write( "GANASTE...!  Salvaste a Pepito" )
+      break;
+    }
+  }
   
-  if(comparando.indexOf("*")==-1){
-     alert("Ganaste....!!!!!");
-  }else{
-     alert("Perdiste...!!!! :c")
+  if( asteriscos.indexOf("*") != -1 ){
+    alert( "Perdiste....!!!!! Mataste a Pepito" );
+    document.write( "Perdiste....!!!!! Mataste a Pepito" );
   }
 }
 
-//array de asteriscos de acuerdo al tamaño de la palabra
-var asteriscos=[];
-for(var i=0; i<palabra.length; i++){
-    asteriscos.push("*");
-}
-
-//compara cada elemento del array con la letra segun la posicion
-function compara1(letra){
-  var  n=palabra.indexOf(letra)
-  for(;n!==-1;){
-    asteriscos[n]=letra;
-    palabra[n]="*"
-    n=palabra.indexOf(letra);  
-  }
-  return asteriscos;
-}
-document.write(ahorcado());
+ahorcado();
